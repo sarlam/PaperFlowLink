@@ -6,8 +6,7 @@ import 'd3';
 import PaperFlowLink from './engine';
 
 import config from './config';
-
-const data = {};
+import data from './data';
 
 new PaperFlowLink(config, data);
 

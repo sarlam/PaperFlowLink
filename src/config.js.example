@@ -1,8 +1,27 @@
 export default {
   site: {
-    title: 'My Super Paper Site'
+    title: 'My Super Paper Site',
+    dataTypes: [
+      {
+        name: 'quotes',
+        type: 'text', // defines types
+        contentKey: 'text',
+        sizes: {
+          WIDTH: 275
+          // HEIGHT: 300
+        }
+      }
+    ]
   },
   modules: [
+    {
+      name: 'readme',
+      config: {
+        // default to site.title
+        name: 'Hello There',
+        descrition: 'Some Markdown'
+      }
+    },
     {
       name: 'menu',
       config: [
