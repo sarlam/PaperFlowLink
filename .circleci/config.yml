@@ -6,7 +6,7 @@ jobs:
     steps:
     - checkout
     - run: npm install
-    - run: npm built
+    - run: npm build
   lint:
     docker:
     - image: circleci/node:10.11
