@@ -2,7 +2,7 @@ import './assets/styles/index.less';
 
 import 'd3';
 
-import PaperFlowLink from './engine';
+import PaperFlowLink from '@engine';
 
 import config from './config';
 import data from './data';

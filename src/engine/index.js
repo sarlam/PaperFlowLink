@@ -3,7 +3,7 @@ import { isEmpty, isNull } from 'lodash';
 import * as d3 from 'd3';
 
 import ContainerTypes from '@engine/ContainerTypes';
-import Layer from '@/engine/Layer';
+import Layer from '@engine/Layer';
 
 let _paperFlowLink = null;
 
