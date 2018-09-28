@@ -24,7 +24,11 @@ jobs:
 
 workflows:
   version: 2
-  lint_and_test:
+  QAtest:
     jobs:
     - lint
     - test
+    - build:
+        requires:
+        - lint
+        - test
