@@ -1,21 +1,18 @@
 const path = require('path');
-const webpack = require('webpack');
-
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/engine/index.js',
   output: {
-    path: path.resolve(__dirname, 'public'),
-    publicPath: '/public/',
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: '/dist/',
     filename: 'app.js'
   },
 
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src/'),
-      '@engine': path.resolve(__dirname, 'src/engine/')
+      '@': path.resolve(__dirname, '../src/'),
+      '@engine': path.resolve(__dirname, '../src/engine/')
     }
   },
   module: {
@@ -59,14 +56,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin({
-      // Options...
-    }),
-    new HtmlWebpackPlugin({
-      title: 'PaperFlowLink',
-      filename: 'index.html',
-      template: 'src/index.html'
-    })
   ],
   devServer: {
     hot: true,
