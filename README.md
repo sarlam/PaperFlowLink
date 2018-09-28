@@ -1,4 +1,6 @@
 # PaperFlowLink
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsarlam%2FPaperFlowLink.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsarlam%2FPaperFlowLink?ref=badge_shield)
+
 
 ## Abstract
 
@@ -36,3 +38,7 @@ TODO
 ## what's next ?
 
 you can take a look at the advancement with project and issues :smile:
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsarlam%2FPaperFlowLink.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsarlam%2FPaperFlowLink?ref=badge_large)
