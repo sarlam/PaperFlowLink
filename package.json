@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
-    "dev": "webpack-dev-server --config ./build/webpack.dev.config.js",
+    "dev": "webpack-dev-server --config ./build/webpack.example.config.js",
     "build": "webpack --config ./build/webpack.prod.config.js",
     "lint": "eslint --max-warnings 0 --ext .js src",
     "lint:fix": "eslint --fix --ext .js src"

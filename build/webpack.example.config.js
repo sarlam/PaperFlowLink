@@ -9,7 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = merge.smart(base, {
 
   mode: 'development',
-  entry: './src/index.js',
+  entry: './src/example/index.js',
   output: {
     path: path.resolve(__dirname, '../public'),
     publicPath: '/',
@@ -25,7 +25,7 @@ module.exports = merge.smart(base, {
     new HtmlWebpackPlugin({
       title: 'PaperFlowLink',
       filename: 'index.html',
-      template: 'src/index.html'
+      template: 'src/example/index.html'
     })
   ]
 });
