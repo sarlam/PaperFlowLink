@@ -1,6 +1,5 @@
 import './assets/styles/index.less';
 
-import 'jquery';
 import 'd3';
 
 import PaperFlowLink from './engine';
@@ -8,7 +7,9 @@ import PaperFlowLink from './engine';
 import config from './config';
 import data from './data';
 
-new PaperFlowLink(config, data);
+const paperFlowLink = new PaperFlowLink(config, data);
+
+console.log(paperFlowLink);
 
 /**
  * MAXI TODO

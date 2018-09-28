@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:
+    docker:
+    - image: circleci/node:10.11
+    steps:
+    - checkout
+    - run: yarn
+    - run: yarn run build
+
+  lint:
+    docker:
+    - image: circleci/node:10.11
+    steps:
+    - checkout
+    - run: yarn
+    - run: yarn run lint
+
+  test:
+    docker:
+    - image: circleci/node:10.11
+    steps:
+    - checkout
+    - run: yarn
+    - run: yarn test
+
+workflows:
+  version: 2
+  QAtest:
+    jobs:
+    - lint
+    - test
+    - build:
+        requires:
+        - lint
+        - test
