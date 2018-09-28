@@ -1,6 +1,5 @@
 import './assets/styles/index.less';
 
-import 'jquery';
 import 'd3';
 
 import PaperFlowLink from './engine';
