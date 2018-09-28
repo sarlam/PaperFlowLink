@@ -2,21 +2,21 @@ version: 2
 jobs:
   build:
     docker:
-    - image: circleci/node:4.8.2
+    - image: circleci/node:10.11
     steps:
     - checkout
     - run: npm install
     - run: npm built
   lint:
     docker:
-    - image: circleci/node:4.8.2
+    - image: circleci/node:10.11
     steps:
     - checkout
     - run: npm install
     - run: npm run lint
   test:
     docker:
-    - image: circleci/node:4.8.2
+    - image: circleci/node:10.11
     steps:
     - checkout
     - run: npm install
