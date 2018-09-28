@@ -4,9 +4,13 @@ jobs:
     docker:
     - image: circleci/node:10.11
     steps:
+    - run: |
+        curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.c
     - checkout
     - run: yarn
     - run: yarn run build
+    - run:
+      command: fossa
   lint:
     docker:
     - image: circleci/node:10.11
@@ -21,6 +25,12 @@ jobs:
     - checkout
     - run: yarn
     - run: yarn test
+  sonar-scanner:
+    docker:
+      docker:
+      - image: circleci/node:10.11
+      steps:
+      - checkout
 
 workflows:
   version: 2
