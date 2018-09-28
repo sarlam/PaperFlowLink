@@ -25,12 +25,6 @@ jobs:
     - checkout
     - run: yarn
     - run: yarn test
-  sonar-scanner:
-    docker:
-      docker:
-      - image: circleci/node:10.11
-      steps:
-      - checkout
 
 workflows:
   version: 2
