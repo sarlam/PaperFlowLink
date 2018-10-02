@@ -42,6 +42,16 @@ export default class PaperFlowLink {
     _paperFlowLink = this;
   }
 
+  init () {
+    this.renderLayers();
+  }
+
+  renderLayers () {
+    Object.keys(this._layers).map(key => {
+      this._layers[key].drawLayer();
+    });
+  }
+
   loadModules () {
     for (let module of this._modules) {
       if (!isEmpty(modules[module.name])) {
@@ -51,14 +61,14 @@ export default class PaperFlowLink {
   }
 
   createALayer (dataType) {
-    if (isEmpty(this._layers[dataType.name])) {
-      const data = !isEmpty(this._data[dataType.name])
-        ? this._data[dataType.name]
-        : [];
+    if (isEmpty(dataType)) return;
 
-      this._layers[dataType.name] = new Layer({
+    const { name: layerName } = dataType;
+
+    if (isEmpty(this._layers[layerName]) && !isEmpty(this._data[layerName])) {
+      this._layers[layerName] = new Layer({
         dataType,
-        data,
+        data: this._data[layerName],
         $parent: this.$root
       });
     }
