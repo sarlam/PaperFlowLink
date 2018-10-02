@@ -1,11 +1,13 @@
 import modules from './modules';
-import { isEmpty, isNull } from 'lodash';
+import { isEmpty, isUndefined, isNull } from 'lodash';
 import * as d3 from 'd3';
 
 import ContainerTypes from '@engine/ContainerTypes';
 import Layer from '@engine/Layer';
 
 let _paperFlowLink = null;
+
+const defaultModules = [{ name: 'history', config: {} }];
 
 export default class PaperFlowLink {
   constructor (config, data) {
@@ -23,10 +25,7 @@ export default class PaperFlowLink {
     this.$root = this._d3.select(`#${rootId}`);
     this.$root.classed(ContainerTypes.MAIN_CONTAINER, true);
 
-    console.log(this.$root);
-
     this._data = data;
-    console.log(data);
 
     for (let dataType of site.dataTypes) {
       this.createALayer(dataType);
@@ -36,7 +35,7 @@ export default class PaperFlowLink {
 
     // module system
     this._loadedModules = {};
-    this._modules = modules;
+    this._modules = defaultModules.concat(modules);
     this.loadModules();
 
     _paperFlowLink = this;
@@ -44,6 +43,11 @@ export default class PaperFlowLink {
 
   init () {
     this.renderLayers();
+    console.log(this._loadedModules);
+    Object.keys(this._loadedModules).map(key => {
+      const module = this._loadedModules[key];
+      if (!isUndefined(module.afterInit)) module.afterInit();
+    });
   }
 
   renderLayers () {
@@ -53,8 +57,18 @@ export default class PaperFlowLink {
   }
 
   loadModules () {
+    console.log(this._modules, modules['history']);
+
+    class Test{
+
+    }
+
+    const test = new Test()
+
+    console.log(isUndefined(test.afterInit))
     for (let module of this._modules) {
-      if (!isEmpty(modules[module.name])) {
+      console.log(module, module.name, modules[module.name], !isEmpty(modules[module.name]));
+      if (!isUndefined(modules[module.name])) {
         this._loadedModules[module.name] = new modules[module.name](this, module.config);
       }
     }
