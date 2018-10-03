@@ -7,7 +7,7 @@ import Layer from '@engine/Layer';
 
 let _paperFlowLink = null;
 
-const defaultModules = [{ name: 'history', config: {} }, { name: 'links', config: {} }];
+const defaultModules = [{name: 'events', config: {}},{ name: 'history', config: {} }, { name: 'links', config: {} }];
 
 export default class PaperFlowLink {
   constructor (config, data) {

@@ -11,13 +11,13 @@ export default class Links extends Module {
 
     this.initializeData();
 
-    window.addEventListener('resize', () => {
-      this.initializeData();
-      this.updateData();
-      this.drawLinks();
-    });
-
     this._historyModule = this._instance._loadedModules['history'];
+  }
+
+  onResize () {
+    this.initializeData();
+    this.updateData();
+    this.drawLinks();
   }
 
   initializeData () {
