@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { find, remove, isUndefined, map } from 'lodash';
+import { find, pull, isUndefined, map } from 'lodash';
 
 import Module from '../Module';
 
@@ -9,7 +9,7 @@ export default class History extends Module {
     this._history = [];
   }
 
-  afterInit () {
+  onAfterInit () {
     const history = this;
     map(this._instance._layers, _layer => {
       _layer._entering
@@ -34,9 +34,11 @@ export default class History extends Module {
 
   add (e) {
     this._history.push(e);
+    this._instance.trigger('history-updated');
   }
 
   remove (e) {
-    remove(this._history, e);
+    this._history = pull(this._history, e);
+    this._instance.trigger('history-updated');
   }
 }
