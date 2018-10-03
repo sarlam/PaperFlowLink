@@ -33,27 +33,35 @@ export default class Links extends Module {
   }
 
   updateData () {
-    this._nodes = this._historyModule._history.map(h => ({
+    this._nodes = this._historyModule._history.map(h => {
+      return this.nodesExtractor(h);
+    });
+
+    this._lines = this._nodes.reduce((acc, node, key) => {
+      return this.linesReducer(acc, node, key);
+    }, []);
+  }
+
+  nodesExtractor (h) {
+    return {
       x: this.getXRatio(h.x),
       y: this.getYRatio(h.y)
-    }));
+    };
+  }
 
+  linesReducer (acc, node, key) {
     const nodesLength = this._nodes.length;
 
-    this._lines = this._nodes.length > 1
-      ? this._nodes.reduce((acc, node, key) => {
-        if (key !== 0) {
-          acc[key - 1].x2 = node.x;
-          acc[key - 1].y2 = node.y;
-        }
+    if (key !== 0) {
+      acc[key - 1].x2 = node.x;
+      acc[key - 1].y2 = node.y;
+    }
 
-        if (key < nodesLength - 1) {
-          acc.push({ x1: node.x, y1: node.y });
-        }
+    if (key < nodesLength - 1) {
+      acc.push({ x1: node.x, y1: node.y });
+    }
 
-        return acc;
-      }, [])
-      : [];
+    return acc;
   }
 
   drawLinks () {
