@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { find, remove, isUndefined } from 'lodash';
+import { find, remove, isUndefined, map } from 'lodash';
 
 export default class History {
   constructor (PFL, config) {
@@ -10,16 +10,18 @@ export default class History {
 
   afterInit () {
     const history = this;
-    Object.keys(this._instance._layers).map(key => {
-      this._instance._layers[key]._entering
+    map(this._instance._layers, _layer => {
+      _layer._entering
+        .style('cursor', 'pointer')
+        .classed('no-select', true)
         .on('click', function (e) {
           const _e = history.find(e);
           if (isUndefined(_e)) {
             history.add(e);
-            d3.select(this).style('background', 'blue');
+            d3.select(this).classed('in-history', true);
           } else {
             history.remove(_e);
-            d3.select(this).style('background', 'green');
+            d3.select(this).classed('in-history', false);
           }
         });
     });
