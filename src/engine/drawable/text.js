@@ -1,13 +1,16 @@
 import { isEmpty, isUndefined } from 'lodash';
 
 export default {
-  drawFunction: ($elems, { sizes }) => {
+  drawFunction: ($elems, { sizes, isHTML }) => {
     $elems
       .style('left', d => `${d.x}vw`)
-      .style('top', d => `${d.y}vh`)
-      .text(function (d) {
-        return d._content;
-      });
+      .style('top', d => `${d.y}vh`);
+    if (isHTML) {
+      // @todo sanitize
+      $elems.html(d => d._content);
+    } else {
+      $elems.text((d) => d._content);
+    }
 
     if (!isEmpty(sizes)) {
       const { WIDTH, HEIGHT } = sizes;
