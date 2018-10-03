@@ -1,10 +1,11 @@
 import * as d3 from 'd3';
 import { find, remove, isUndefined, map } from 'lodash';
 
-export default class History {
-  constructor (PFL, config) {
-    this._instance = PFL;
-    this._config = config;
+import Module from '../Module';
+
+export default class History extends Module {
+  constructor (...args) {
+    super(...args);
     this._history = [];
   }
 
