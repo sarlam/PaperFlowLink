@@ -4,10 +4,9 @@ import * as d3 from 'd3';
 
 import ContainerTypes from '@engine/ContainerTypes';
 import Layer from '@engine/Layer';
+import defaultModules from '@engine/defaultEnabledModules';
 
 let _paperFlowLink = null;
-
-const defaultModules = [{name: 'events', config: {}},{ name: 'history', config: {} }, { name: 'links', config: {} }];
 
 export default class PaperFlowLink {
   constructor (config, data) {

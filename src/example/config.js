@@ -23,6 +23,7 @@ export default {
         descrition: 'Some Markdown'
       }
     },
+    { name: 'links', config: {} },
     {
       name: 'menu',
       config: [
