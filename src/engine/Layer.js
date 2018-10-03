@@ -22,16 +22,16 @@ export default class Layer {
       d._content = d[this._dataType.contentKey];
       return d;
     });
-
-    this.drawLayer();
   }
 
   drawLayer () {
-    const $elems = this.$root.selectAll(this._drawable.elemType)
-      .data(this._data)
-      .enter()
-      .append(this._drawable.elemType);
+    this._$elems = this.$root.selectAll(this._drawable.elemType)
+      .data(this._data);
 
-    this._drawable.drawFunction($elems, this._dataType);
+    this._entering = this._$elems.enter().append(this._drawable.elemType);
+
+    this._$elems.exit().remove();
+
+    this._drawable.drawFunction(this._entering, this._dataType);
   }
 }

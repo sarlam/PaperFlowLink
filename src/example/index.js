@@ -9,7 +9,7 @@ import data from './data';
 
 const paperFlowLink = new PaperFlowLink(config, data);
 
-console.log(paperFlowLink);
+paperFlowLink.init();
 
 /**
  * MAXI TODO

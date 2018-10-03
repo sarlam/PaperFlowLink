@@ -1,9 +1,10 @@
 import modules from './modules';
-import { isEmpty, isNull } from 'lodash';
+import { isEmpty, isUndefined, isNull, camelCase, forEach } from 'lodash';
 import * as d3 from 'd3';
 
 import ContainerTypes from '@engine/ContainerTypes';
 import Layer from '@engine/Layer';
+import defaultModules from '@engine/defaultEnabledModules';
 
 let _paperFlowLink = null;
 
@@ -23,10 +24,7 @@ export default class PaperFlowLink {
     this.$root = this._d3.select(`#${rootId}`);
     this.$root.classed(ContainerTypes.MAIN_CONTAINER, true);
 
-    console.log(this.$root);
-
     this._data = data;
-    console.log(data);
 
     for (let dataType of site.dataTypes) {
       this.createALayer(dataType);
@@ -36,31 +34,58 @@ export default class PaperFlowLink {
 
     // module system
     this._loadedModules = {};
-    this._modules = modules;
+    this._modules = defaultModules.concat(modules);
     this.loadModules();
 
     _paperFlowLink = this;
   }
 
+  init () {
+    this.renderLayers();
+    this.trigger('after-init');
+  }
+
+  renderLayers () {
+    Object.keys(this._layers).map(key => {
+      this._layers[key].drawLayer();
+    });
+  }
+
   loadModules () {
     for (let module of this._modules) {
-      if (!isEmpty(modules[module.name])) {
+      if (!isUndefined(modules[module.name])) {
         this._loadedModules[module.name] = new modules[module.name](this, module.config);
       }
     }
   }
 
   createALayer (dataType) {
-    if (isEmpty(this._layers[dataType.name])) {
-      const data = !isEmpty(this._data[dataType.name])
-        ? this._data[dataType.name]
-        : [];
+    if (isEmpty(dataType)) return;
 
-      this._layers[dataType.name] = new Layer({
+    const { name: layerName } = dataType;
+
+    if (isEmpty(this._layers[layerName]) && !isEmpty(this._data[layerName])) {
+      this._layers[layerName] = new Layer({
         dataType,
-        data,
+        data: this._data[layerName],
         $parent: this.$root
       });
     }
+  }
+
+  trigger (eventName, payload = {}) {
+    const callBack = PaperFlowLink.getEventCallbackName(eventName);
+
+    forEach(this._layers, layer => {
+      if (!isUndefined(layer[callBack])) layer[callBack](payload);
+    });
+
+    forEach(this._loadedModules, modules => {
+      if (!isUndefined(modules[callBack])) modules[callBack](payload);
+    });
+  }
+
+  static getEventCallbackName (event) {
+    return camelCase(`on-${event}`);
   }
 }

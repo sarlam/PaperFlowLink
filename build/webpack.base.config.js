@@ -1,20 +1,16 @@
 const path = require('path');
 
-module.exports = {
+const merge = require('webpack-merge');
+
+const aliases = require('../webpack.config');
+
+module.exports = merge.smart(aliases, {
   mode: 'production',
   entry: './src/engine/index.js',
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/dist/',
     filename: 'app.js'
-  },
-
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, '../src/'),
-      '@engine': path.resolve(__dirname, '../src/engine/'),
-      '@example': path.resolve(__dirname, '../src/example/')
-    }
   },
   module: {
     rules: [
@@ -56,10 +52,9 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-  ],
+  plugins: [],
   devServer: {
     hot: true,
     inline: true
   }
-};
+});

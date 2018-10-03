@@ -1,11 +1,12 @@
 export default {
   site: {
-    title: 'My Super Paper Site',
+    title: 'Paper Flow Link Example Site',
     dataTypes: [
       {
         name: 'quotes',
         type: 'text', // defines types
         contentKey: 'text',
+        isHTML: true,
         sizes: {
           WIDTH: 275
           // HEIGHT: 300
@@ -22,6 +23,7 @@ export default {
         descrition: 'Some Markdown'
       }
     },
+    { name: 'links', config: {} },
     {
       name: 'menu',
       config: [
