@@ -1,5 +1,5 @@
 import modules from './modules';
-import { isEmpty, isUndefined, isNull } from 'lodash';
+import { isEmpty, isUndefined, isNull, camelCase, forEach } from 'lodash';
 import * as d3 from 'd3';
 
 import ContainerTypes from '@engine/ContainerTypes';
@@ -7,7 +7,7 @@ import Layer from '@engine/Layer';
 
 let _paperFlowLink = null;
 
-const defaultModules = [{ name: 'history', config: {} }];
+const defaultModules = [{ name: 'history', config: {} }, { name: 'links', config: {} }];
 
 export default class PaperFlowLink {
   constructor (config, data) {
@@ -43,11 +43,7 @@ export default class PaperFlowLink {
 
   init () {
     this.renderLayers();
-    console.log(this._loadedModules);
-    Object.keys(this._loadedModules).map(key => {
-      const module = this._loadedModules[key];
-      if (!isUndefined(module.afterInit)) module.afterInit();
-    });
+    this.trigger('after-init');
   }
 
   renderLayers () {
@@ -57,17 +53,7 @@ export default class PaperFlowLink {
   }
 
   loadModules () {
-    console.log(this._modules, modules['history']);
-
-    class Test{
-
-    }
-
-    const test = new Test()
-
-    console.log(isUndefined(test.afterInit))
     for (let module of this._modules) {
-      console.log(module, module.name, modules[module.name], !isEmpty(modules[module.name]));
       if (!isUndefined(modules[module.name])) {
         this._loadedModules[module.name] = new modules[module.name](this, module.config);
       }
@@ -86,5 +72,21 @@ export default class PaperFlowLink {
         $parent: this.$root
       });
     }
+  }
+
+  trigger (eventName, payload = {}) {
+    const callBack = PaperFlowLink.getEventCallbackName(eventName);
+
+    forEach(this._layers, layer => {
+      if (!isUndefined(layer[callBack])) layer[callBack](payload);
+    });
+
+    forEach(this._loadedModules, modules => {
+      if (!isUndefined(modules[callBack])) modules[callBack](payload);
+    });
+  }
+
+  static getEventCallbackName (event) {
+    return camelCase(`on-${event}`);
   }
 }
